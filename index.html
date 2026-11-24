@@ -269,7 +269,14 @@ header.hero .tabs.cards9 a{border-bottom-width:1px}
 header.hero .cards9 a.on,header.hero .cards9 a.on b{color:#17181c}
 @media(min-width:901px){.cards9 a{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;justify-items:center;text-align:center;row-gap:6px;padding:14px 8px}.cards9 i{grid-row:auto}.cards9 small{text-align:center}}
 @media(max-width:900px){.tabs.cards9{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:720px){.tabs.cards9{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1*max(5vw,16px));padding:4px max(5vw,16px) 22px}.cards9 a{flex:0 0 148px;scroll-snap-align:start}}
+@media(max-width:720px){
+ .tabs.cards9{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;padding:2px 0 22px}
+ .cards9 a{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;justify-items:center;text-align:center;row-gap:4px;padding:12px 4px 10px;min-height:96px}
+ .cards9 i{grid-row:auto;width:34px;height:34px;font-size:14px}
+ .cards9 b{font-size:14px}
+ .cards9 small{font-size:11.5px;text-align:center;-webkit-line-clamp:1}
+}
+@media(max-width:340px){.cards9 small{display:none}.cards9 a{min-height:80px}}
 /* ── 토정비결 ── */
 .tjhead{display:flex;gap:18px;align-items:center}.tjno{display:flex;gap:6px}.tjno span{width:44px;height:58px;border-radius:10px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font:900 30px "Noto Serif KR",serif}
 /* ── 꿈해몽 ── */
@@ -572,23 +579,23 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242347"></script>
-<script src="js/core.js?v=202611242347"></script>
-<script src="js/hanja-db.js?v=202611242347"></script>
-<script src="js/reading.js?v=202611242347"></script>
-<script src="js/saju-view.js?v=202611242347"></script>
-<script src="js/match.js?v=202611242347"></script>
-<script src="js/naming.js?v=202611242347"></script>
-<script src="js/tools.js?v=202611242347"></script>
-<script src="js/analysis.js?v=202611242347"></script>
-<script src="js/detail.js?v=202611242347"></script>
-<script src="js/admin.js?v=202611242347"></script>
-<script src="js/extra-tabs.js?v=202611242347"></script>
-<script src="js/tojeong.js?v=202611242347"></script>
-<script src="js/dream.js?v=202611242347"></script>
-<script src="js/tarot.js?v=202611242347"></script>
-<script src="js/main.js?v=202611242347"></script>
-<script src="js/topbar.js?v=202611242347"></script>
-<script src="js/tests.js?v=202611242347"></script>
+<script src="lunar.js?v=202611242351"></script>
+<script src="js/core.js?v=202611242351"></script>
+<script src="js/hanja-db.js?v=202611242351"></script>
+<script src="js/reading.js?v=202611242351"></script>
+<script src="js/saju-view.js?v=202611242351"></script>
+<script src="js/match.js?v=202611242351"></script>
+<script src="js/naming.js?v=202611242351"></script>
+<script src="js/tools.js?v=202611242351"></script>
+<script src="js/analysis.js?v=202611242351"></script>
+<script src="js/detail.js?v=202611242351"></script>
+<script src="js/admin.js?v=202611242351"></script>
+<script src="js/extra-tabs.js?v=202611242351"></script>
+<script src="js/tojeong.js?v=202611242351"></script>
+<script src="js/dream.js?v=202611242351"></script>
+<script src="js/tarot.js?v=202611242351"></script>
+<script src="js/main.js?v=202611242351"></script>
+<script src="js/topbar.js?v=202611242351"></script>
+<script src="js/tests.js?v=202611242351"></script>
 </body>
 </html>

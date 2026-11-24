@@ -8,12 +8,15 @@ function route(){
  if(t==='tojeong')try{drawTojeong()}catch(e){$('tjres').textContent='오류: '+e.message}
  if(t==='dream'&&!$('dres').innerHTML)try{drawDream()}catch(e){}
  if(t==='tarot'&&!$('tarotres').innerHTML)try{drawTarot()}catch(e){}
- const on=document.querySelector(`#tabs a[data-t="${t}"]`);if(on&&innerWidth<=720){const nv=$('tabs');nv.scrollLeft=on.offsetLeft-nv.offsetLeft-16}
+ // 휴대폰에서 메뉴 카드를 누르면 해당 내용 위치로 화면을 내려 줌
+ if(NAVTAP&&innerWidth<=720){NAVTAP=false;const m=$('v-'+t);if(m)setTimeout(()=>m.scrollIntoView({behavior:'smooth',block:'start'}),30)}NAVTAP=false;
  document.querySelectorAll('#tabs a').forEach(a=>a.classList.toggle('on',a.dataset.t===t));
  if(t==='match'&&!$('gres').innerHTML)try{gRun()}catch(e){}
  if(t==='name'&&!$('nres').innerHTML)try{nameRun()}catch(e){}
  if(t==='name'&&!$('ares').innerHTML)try{$('a1').value=$('a1').value||'민';$('a2').value=$('a2').value||'준';hjOpts(1);hjOpts(2);nameAnalyze()}catch(e){}
 }
+let NAVTAP=false;
+$('tabs').addEventListener('click',ev=>{const a=ev.target.closest('a[data-t]');if(!a)return;NAVTAP=true;if(location.hash==='#'+a.dataset.t){ev.preventDefault();route()}});
 window.addEventListener('hashchange',route);
 const act=(ev,fn)=>{if(ev.type==='keydown'&&ev.key!=='Enter'&&ev.key!==' ')return;if(ev.type==='keydown')ev.preventDefault();fn()};
 for(const id of ['dy','tl'])for(const t of ['click','keydown'])$(id).addEventListener(t,ev=>{const c=ev.target.closest('[data-dy]');if(c)act(ev,()=>openDaeun(+c.dataset.dy))});
