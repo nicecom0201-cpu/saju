@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>사주 만세력</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 차분하고 품위 있는 명리 도구, 장식보다 정확함
+   IDEA: 붓글씨로 쓴 사주 명식(命式) 한 장
+   PICTURE: 오방색으로 물든 여덟 글자 기둥 넷이 화면 중심
+   COLOUR and TYPE: 먹색 바탕과 백지, 오행 오방색이 유일한 강조 / Noto Serif KR 한자 + IBM Plex Sans KR
+   LAYOUT: 입력 한 줄, 큰 명식판, 오행 막대와 일간 해설, 대운 가로 흐름 */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#111216);--ink:light-dark(#17181c,#ecebe6);--sub:light-dark(#5d5f66,#a3a4aa);
+--line:light-dark(#e3e2dd,#2a2b31);--card:light-dark(#f7f6f2,#1a1b20);--accent:light-dark(#b8322a,#f06a5e);
+--c1:light-dark(#b8322a,#e0574b);--c2:light-dark(#2f6fb0,#5b93d6);--wood:#2f8a5f;--fire:#d8443a;--earth:#d39a1f;--metal:light-dark(#8d9098,#c9ccd3);--water:light-dark(#1f2a44,#5b7bd6)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans KR",system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+header.band{padding-bottom:12px}
+h1{font:900 clamp(32px,5vw,48px)/1.05 "Noto Serif KR",serif;margin:0 0 6px;text-wrap:balance}
+h2{font:700 22px/1.2 "Noto Serif KR",serif;margin:0 0 16px}
+.lede{color:var(--sub);margin:0;max-width:62ch}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;
+ background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+label{display:grid;gap:4px;font-size:13px;color:var(--sub)}
+input,select,button{font:16px "IBM Plex Sans KR",sans-serif;min-height:44px;border-radius:10px;border:1px solid var(--line);
+ background:var(--bg);color:var(--ink);padding:0 12px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink);min-height:44px}
+.chk input{min-height:0;width:20px;height:20px}
+button{background:var(--ink);color:var(--bg);font-weight:700;border:0;cursor:pointer}
+button:hover{opacity:.9}
+.err{color:var(--accent);font-size:14px;margin:10px 0 0;min-height:1em}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.6vw,18px);margin-top:8px}
+.pil{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 8px 16px;text-align:center;position:relative}
+.pil.me{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.pil .t{font-size:13px;color:var(--sub)}
+.pil .ss{font-size:13px;font-weight:700;margin:6px 0 4px;min-height:1.4em}
+.ch{width:min(100%,128px);aspect-ratio:1;margin:4px auto;border-radius:14px;display:grid;place-items:center;color:#fff;
+ font:900 clamp(40px,8vw,76px)/1 "Noto Serif KR",serif;position:relative;
+ box-shadow:inset 0 -6px 0 rgb(0 0 0/.14),inset 0 2px 0 rgb(255 255 255/.18)}
+.ch small{position:absolute;right:8px;bottom:6px;font:700 13px "IBM Plex Sans KR",sans-serif;opacity:.9}
+.ch.metal{color:#1b1c20}
+.wood{background:var(--wood)}.fire{background:var(--fire)}.earth{background:var(--earth)}.metal{background:var(--metal)}.water{background:var(--water)}
+.pil .hid{font-size:13px;color:var(--sub);margin-top:6px}
+.pil.off .ch{opacity:.18}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--sub);font-size:14px;margin:14px 0 0}
+.meta b{color:var(--ink);font-weight:500}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,4vw,48px)}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:4.5em minmax(0,1fr) 2.5em;align-items:center;gap:10px;font-size:15px}
+.bar .tr{height:22px;background:var(--card);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar .f{height:100%;border-radius:5px;transition:width .5s ease}
+.bar .n{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:14px;color:var(--sub);margin-top:14px}
+.dm{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.dm .big{font:900 40px/1 "Noto Serif KR",serif;margin-right:10px}
+.dm p{margin:10px 0 0}
+.dm .kw{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.dm .kw span{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:3px 10px}
+.dy{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.dy>div{flex:none;scroll-snap-align:start;width:92px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 6px}
+.dy .g{font:700 26px/1.2 "Noto Serif KR",serif}
+.dy .a{font-size:13px;color:var(--sub)}
+.dy>div.now{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.rd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.rc h3{font:700 18px/1.3 "Noto Serif KR",serif;margin:0 0 8px}
+.tag.metal{color:#1b1c20!important}.nm .tag{display:inline-block;font-size:13px;font-weight:700;color:#fff;border-radius:99px;padding:1px 9px;margin-left:4px}
+.rc p{margin:8px 0 0}.rc .tag{display:inline-block;font-size:13px;font-weight:700;color:#fff;border-radius:99px;padding:2px 10px;margin-right:6px}
+.tg{display:grid;gap:6px;margin-top:6px}
+.tg div{display:grid;grid-template-columns:3.5em minmax(0,1fr) 1.5em;gap:8px;align-items:center;font-size:14px}
+.tg i{display:block;height:12px;border-radius:4px;background:var(--ink);opacity:.75}
+.tg b{text-align:right;font-weight:500}
+.life{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px;margin-bottom:18px}
+.life .rc .age{font-size:13px;color:var(--sub)}.life .rc .gz{font:900 30px/1.1 "Noto Serif KR",serif;margin:4px 0}
+.en{display:inline-block;font-size:13px;border:1px solid var(--line);border-radius:99px;padding:1px 9px;margin-left:6px;vertical-align:2px}
+.tl{display:grid;gap:6px;margin-bottom:18px}
+.tl>div{display:grid;grid-template-columns:5.5em 3.2em 6.5em minmax(0,1fr);gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:15px}
+.tl>div.now{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tl .g{font:700 20px "Noto Serif KR",serif}.tl .st{color:var(--accent);letter-spacing:1px;white-space:nowrap}
+@media(max-width:600px){.tl>div{grid-template-columns:4.5em 2.8em minmax(0,1fr)}.tl>div span:last-child{grid-column:1/-1;color:var(--sub);font-size:14px}}
+.tabs{display:flex;gap:6px;margin-top:18px;border-bottom:1px solid var(--line)}
+.tabs a{padding:10px 18px;font-weight:700;color:var(--sub);text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-1px;min-height:44px}
+.tabs a.on{color:var(--ink);border-color:var(--accent)}
+.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.wide{width:100%;margin-top:12px}
+.people{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.people span{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;background:var(--card);font-size:14px}
+.people button{min-height:36px;background:none;color:var(--ink);font-weight:500;padding:0 6px 0 14px}
+.people button.x{padding:0 12px 0 4px;color:var(--sub)}
+.rels{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.rels span{font-size:13px;border-radius:99px;padding:3px 11px;border:1px solid var(--line)}
+.rels .good{background:light-dark(#e6f3ec,#173226);border-color:transparent}
+.rels .bad{background:light-dark(#fbe6e4,#3a1c1a);border-color:transparent}
+.rels b{font-weight:700}
+.today{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:20px;align-items:center}
+.today .big{font:900 64px/1 "Noto Serif KR",serif}
+.stars{color:var(--accent);letter-spacing:2px;white-space:nowrap}
+.mo{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:10px}
+.mo>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.mo>div.now{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.mo .h{display:flex;justify-content:space-between;align-items:baseline}.mo .g{font:700 20px "Noto Serif KR",serif}
+.mo p{margin:4px 0 0;font-size:14px;color:var(--sub)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.who h3{grid-column:1/-1;margin:0;font:700 18px "Noto Serif KR",serif}
+.gtop{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:28px;align-items:center;margin:24px 0}
+.ring{position:relative;aspect-ratio:1;max-width:240px}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font:900 64px/1 "Noto Serif KR",serif}.ring span{color:var(--sub);font-size:14px}
+.minis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;text-align:center}
+.mini .c{border-radius:8px;color:#fff;font:900 26px/1.6 "Noto Serif KR",serif}.mini .c.metal{color:#1b1c20}
+.mini .t{font-size:12px;color:var(--sub)}
+.nm{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px;margin-top:14px}
+.nm>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.nm .hz{font:900 34px/1.1 "Noto Serif KR",serif}.nm .ko{font-size:20px;font-weight:700;margin-left:6px}
+.nm .sc{float:right;font-weight:700;color:var(--accent)}
+.nm p{margin:6px 0 0;font-size:14px}.nm .s{color:var(--sub);font-size:13px}
+@media(max-width:600px){.pair,.gtop,.today,.minis{grid-template-columns:minmax(0,1fr)}.ring{margin:0 auto}}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}.tools button{min-height:40px;padding:0 16px}
+.toast{font-size:14px;color:var(--sub)}
+.calnav{display:flex;align-items:center;gap:14px;margin-bottom:10px}.calnav b{font:700 20px "Noto Serif KR",serif;min-width:8em;text-align:center}.calnav button{min-width:44px;padding:0}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .w{text-align:center;font-size:13px;color:var(--sub);padding:4px 0}
+.cal .d{border:1px solid var(--line);border-radius:10px;padding:6px 6px 8px;min-height:76px;background:var(--card);position:relative}
+.cal .d .n{font-size:13px;font-weight:700}.cal .d .g{font:700 15px "Noto Serif KR",serif;display:block;margin-top:2px}
+.cal .d .s{font-size:11px;color:var(--accent);letter-spacing:0;white-space:nowrap}
+.cal .d.l5{background:light-dark(#e6f3ec,#173226)}.cal .d.l4{background:light-dark(#f1f8f3,#14251d)}.cal .d.l2{opacity:.7}
+.cal .d.tdy{outline:2px solid var(--accent);outline-offset:-2px}
+.cal .d .x{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--fire)}
+.cal .e{border:0;background:none}
+.copybox{width:100%;min-height:160px;margin-top:8px;font:14px/1.5 "IBM Plex Sans KR",sans-serif;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:10px}
+@media(max-width:600px){.cal .d{min-height:58px;padding:4px}.cal .d .g{font-size:12px}.cal .d .s{display:none}}
+.scroll{overflow-x:auto}.relfig{position:relative;margin-top:2px}.relfig svg{display:block;width:100%}
+.mt{width:100%;border-collapse:collapse;font-size:15px}.mt th,.mt td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:center}
+.mt th{font-weight:500;color:var(--sub);font-size:13px}.mt td:first-child,.mt th:first-child{text-align:start;color:var(--sub);white-space:nowrap}
+.mt .gm{color:var(--accent);font-weight:700}.mt button{min-height:36px;background:none;color:var(--ink);text-decoration:underline;padding:0;font-weight:700}
+.mt .oh{display:inline-block;min-width:1.7em;border-radius:6px;color:#fff;font-size:13px;font-weight:700;margin:1px}.mt .oh.metal{color:#1b1c20}.mt .oh.z{opacity:.25}
+.ym{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px}
+.meter{position:relative;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--c2),var(--line) 50%,var(--c1));margin:14px 0 6px}
+.meter b{position:absolute;top:-5px;width:6px;height:26px;border-radius:3px;background:var(--ink);transform:translateX(-50%)}
+.meter+div{display:flex;justify-content:space-between;font-size:13px;color:var(--sub)}
+.ys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.ys div{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:var(--bg)}
+.ys .k{font-size:13px;color:var(--sub)}.ys .v{font:900 24px/1.3 "Noto Serif KR",serif}
+.lg{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-bottom:6px}.lg i{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+#lifefig{position:relative;min-height:300px}#lifefig>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tip{position:absolute;pointer-events:none;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;box-shadow:0 4px 14px rgb(0 0 0/.12);white-space:nowrap}
+.cal .d .hb{position:absolute;bottom:5px;right:6px;color:var(--accent);font-size:13px}
+.cal .d .ab{font-size:11px;color:var(--sub);display:block}
+@media(max-width:600px){.ym{grid-template-columns:minmax(0,1fr)}.ys{grid-template-columns:repeat(2,minmax(0,1fr))}.cal .d .ab{display:none}}
+.panel{position:fixed;inset:0;background:rgb(0 0 0/.45);z-index:50;display:flex;justify-content:flex-end}
+.panel[hidden]{display:none}
+.pin{background:var(--bg);width:min(620px,100%);height:100%;overflow-y:auto;padding:20px clamp(16px,3vw,28px) 40px;box-shadow:-8px 0 30px rgb(0 0 0/.2)}
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:-20px;background:var(--bg);padding:8px 0;margin-bottom:6px}
+.ptop h2{margin:0;font-size:20px}.ptop button{min-width:44px;padding:0}
+.phead{display:flex;gap:16px;align-items:center;margin-bottom:8px}.phead .big{font:900 54px/1 "Noto Serif KR",serif}
+.ph3{font:700 17px "Noto Serif KR",serif;margin:20px 0 8px}
+.pin .rd{margin-top:12px;gap:10px}.pin .rc{padding:14px}
+.yl{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:6px}
+.yl>*{display:grid;gap:2px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:8px 4px;background:var(--card);font-size:13px;min-height:auto;color:var(--ink);font-weight:400}
+.yl span{font:700 16px "Noto Serif KR",serif}.yl .now{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.hr{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}
+.hr div{border:1px solid var(--line);border-radius:10px;padding:6px;text-align:center;font-size:13px;color:var(--accent);background:var(--card)}
+.hr div b{display:block;color:var(--ink)}.hr div span{display:block;color:var(--sub);font-size:12px}
+.hr .g{background:light-dark(#e6f3ec,#173226);border-color:transparent}.hr .b{background:light-dark(#fbe6e4,#3a1c1a);border-color:transparent}
+.pin hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+[data-dy],[data-day]{cursor:pointer}[data-dy]:hover,[data-day]:hover{border-color:var(--ink)}
+[data-dy]:focus-visible,[data-day]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rank{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.rank li{display:grid;grid-template-columns:2em minmax(4em,auto) auto minmax(60px,1fr) 4em auto auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card)}
+.rank .no{font:900 20px "Noto Serif KR",serif;color:var(--accent)}.rank .sc{text-align:right}.rank .gr{font-size:14px;color:var(--sub)}
+.bar2{height:10px;background:var(--line);border-radius:99px;overflow:hidden}.bar2 i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.rank button{min-height:36px;padding:0 12px}
+.x{min-height:28px;padding:0 6px;background:none;color:var(--sub);border:0}
+@media(max-width:600px){.rank li{grid-template-columns:2em minmax(0,1fr) auto;row-gap:4px}.rank .age,.rank .bar2{display:none}.rank .gr{grid-column:2}.rank button{grid-column:3}}
+.tabs .adm{margin-left:auto;align-self:center;min-height:36px;padding:0 14px;font-size:14px}
+.adminbox{margin-top:14px;border:2px solid var(--ink);border-radius:14px;padding:16px}
+.ah{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.ah h2{margin:0;font-size:19px}
+.adminbox .mt td button{min-height:34px;padding:0 10px;text-decoration:none;font-weight:500;font-size:14px}
+body.admin .tabs .adm{background:var(--ink);color:var(--bg)}
+footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
+@media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
+@media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+ <h1>사주 만세력</h1>
+ <p class="lede">절기 기준 만세력으로 사주, 평생운, 궁합, 이름짓기까지 한 번에 봅니다.</p>
+ <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a><button type="button" class="ghost adm" id="adminbtn">관리자</button></nav>
+</div></header>
+<main id="v-saju">
+
+<section class="band" style="padding-top:8px"><div class="wrap">
+ <div id="f" class="form" role="form">
+  <label>이름<input id="nm" placeholder="예: 홍길동" maxlength="20"></label>
+  <label>달력<select id="cal"><option value="s">양력</option><option value="l">음력</option><option value="ll">음력(윤달)</option></select></label>
+  <label>생년월일<input id="date" type="date"></label>
+  <label>태어난 시각<input id="time" type="time"></label>
+  <label>성별<select id="sex"><option value="1">남</option><option value="0">여</option></select></label>
+  <label>출생지 (시각 보정)<select id="loc">
+   <option value="0">표준시 그대로</option><option value="127.0">서울</option><option value="126.7">인천</option><option value="127.7">춘천</option>
+   <option value="127.4">대전</option><option value="128.6">대구</option><option value="129.1">부산</option><option value="129.3">울산</option>
+   <option value="126.9">광주</option><option value="126.5">제주</option></select></label>
+  <label>자시 처리<select id="sect"><option value="2">0시에 날짜 바뀜</option><option value="1">23시에 날짜 바뀜</option></select></label>
+  <label class="chk"><input id="notime" type="checkbox">시각 모름</label>
+  <button type="button" id="go">사주 보기</button>
+  <button type="button" id="sv" class="ghost" hidden>저장</button>
+ </div>
+ <div class="adminbox" id="adminbox" hidden>
+  <div class="ah"><h2>관리자 · 저장한 사람</h2><div class="tools" style="margin:0"><button type="button" class="ghost" id="pinchg">PIN 변경</button><button type="button" class="ghost" id="wipe">저장 목록 전체 삭제</button></div></div>
+  <div class="scroll" id="people"></div>
+  <p class="note">이 목록은 관리자 PIN을 입력했을 때만 보이며, 페이지를 새로 열면 다시 잠깁니다. 정보는 이 기기의 브라우저에만 저장되고 다른 사람의 기기나 서버로 전송되지 않습니다.</p>
+ </div>
+ <p class="err" id="err" role="status"></p>
+
+ <div class="board" id="board"></div>
+ <div class="relfig" id="relfig"><svg id="relsvg" aria-label="합충 관계 그림"></svg></div>
+ <div class="meta" id="meta"></div>
+ <div class="rels" id="rels"></div>
+ <div class="tools"><button type="button" class="ghost" data-copy="saju">풀이 전체 복사</button></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap two">
+ <div>
+  <h2>오행 분포</h2>
+  <div class="bars" id="bars"></div>
+  <p class="note" id="lack"></p>
+ </div>
+ <div>
+  <h2>일간 (나를 나타내는 글자)</h2>
+  <div class="dm" id="dm"></div>
+ </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>용신 분석 · 내게 필요한 기운</h2>
+ <div id="yong"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>명식 상세</h2>
+ <div class="scroll"><table class="mt" id="mt"></table></div>
+ <p class="note">12신살은 연지(띠) 기준, 공망은 일주 기준입니다. 공망인 기둥은 그 자리의 힘이 비어 있다고 봅니다.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>신살</h2>
+ <div class="rd" id="sins"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>대운 (10년 단위 흐름)</h2>
+ <div class="dy" id="dy"></div>
+ <p class="note" id="dyn"></p>
+ <p class="note">대운 카드를 누르면 그 10년의 상세 풀이와 해마다의 흐름이 열립니다.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>사주 풀이</h2>
+ <div class="rd" id="rd"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>오늘의 운세</h2>
+ <div id="today"></div>
+ <h2 style="margin-top:28px" id="moh">월별 운세</h2>
+ <div class="mo" id="mo"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>신년운세</h2>
+ <div class="form" style="grid-template-columns:repeat(auto-fit,minmax(150px,220px))"><label>연도<select id="ny"></select></label></div>
+ <div id="nyr" style="margin-top:14px"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>운세 달력</h2>
+ <div class="calnav"><button type="button" class="ghost" id="cprev" aria-label="이전 달">◀</button><b id="ctitle"></b><button type="button" class="ghost" id="cnext" aria-label="다음 달">▶</button></div>
+ <div class="cal" id="calg"></div>
+ <p class="note">별점은 그 달 날짜끼리 비교한 상대 점수입니다. 진한 칸이 좋은 날, 붉은 점이 일지와 충돌하는 날입니다. 날짜를 누르면 그날의 상세 풀이와 시간대별 운세가 열립니다.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>택일 · 좋은 날 찾기</h2>
+ <div class="form">
+  <label>목적<select id="tp"><option value="wed">결혼·약혼</option><option value="move">이사·입주</option><option value="biz">계약·개업</option><option value="exam">시험·면접</option><option value="trip">여행·출장</option></select></label>
+  <label>기간<select id="tr"><option value="30">앞으로 30일</option><option value="90" selected>앞으로 90일</option><option value="180">앞으로 6개월</option><option value="365">앞으로 1년</option></select></label>
+  <label class="chk"><input type="checkbox" id="tw">궁합 탭의 둘째 사람도 함께</label>
+  <button type="button" id="tgo">좋은 날 찾기</button>
+ </div>
+ <div class="rd" id="tres" style="margin-top:14px"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>평생 사주</h2>
+ <div class="life" id="life"></div>
+ <h3 style="font:700 18px 'Noto Serif KR',serif;margin:0 0 10px">대운별 운의 흐름</h3>
+ <div class="tl" id="tl"></div>
+ <div class="rd" id="fld"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>인생 운세 그래프</h2>
+ <div class="lg"><span><i style="background:var(--c1)"></i>대운 (10년 흐름)</span><span><i style="background:var(--c2);height:2px"></i>세운 (해마다의 흐름)</span></div>
+ <div class="fig" id="lifefig"><svg id="lifesvg" role="img" aria-label="나이별 대운과 세운 운세 점수 그래프"></svg><div class="tip" id="lifetip" hidden></div></div>
+ <p class="note" id="lifenote"></p>
+</div></section>
+
+
+</main>
+
+<main id="v-match" hidden>
+<section class="band" style="padding-top:8px"><div class="wrap">
+ <div class="pair">
+  <div class="form who" id="ga"></div>
+  <div class="form who" id="gb"></div>
+ </div>
+ <div class="form" style="margin-top:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+  <label>관계<select id="gm"><option value="love">연인·부부</option><option value="friend">친구</option><option value="biz">직장 동료·동업자</option><option value="family">부모(첫째)·자녀(둘째)</option></select></label>
+  <button type="button" id="ggo">궁합 보기</button>
+  <button type="button" class="ghost" data-copy="match">결과 복사</button>
+ </div>
+ <p class="err" id="gerr" role="status"></p>
+ <div id="gres"></div>
+ <div id="gcwrap" hidden>
+  <h2 style="margin-top:32px">커플 운세 달력</h2>
+  <div class="calnav"><button type="button" class="ghost" id="gcprev" aria-label="이전 달">◀</button><b id="gctitle"></b><button type="button" class="ghost" id="gcnext" aria-label="다음 달">▶</button></div>
+  <div class="cal" id="gcal"></div>
+  <p class="note" id="gcnote"></p>
+ </div>
+</div></section>
+</main>
+
+<main id="v-name" hidden>
+<section class="band" style="padding-top:8px"><div class="wrap">
+ <h2>내 이름 풀이</h2>
+ <div class="form" id="af">
+  <label>성<select id="as"></select></label>
+  <label>이름 첫 글자<input id="a1" maxlength="1" placeholder="예: 민"></label>
+  <label>한자<select id="a1h"></select></label>
+  <label>이름 둘째 글자<input id="a2" maxlength="1" placeholder="예: 준"></label>
+  <label>한자<select id="a2h"></select></label>
+  <button type="button" id="ago">이름 풀이</button>
+ </div>
+ <div class="form" id="amanual" hidden style="margin-top:10px"></div>
+ <div id="ares" style="margin-top:14px"></div>
+ <div class="tools"><button type="button" class="ghost" id="cadd">비교에 추가</button><button type="button" class="ghost" data-copy="name">이름 결과 복사</button></div>
+ <h2 style="margin-top:32px">이름 비교</h2>
+ <div id="cmp"></div>
+ <h2 style="margin-top:36px">새 이름 추천</h2>
+ <div class="form">
+  <label>성<select id="sn"></select></label>
+  <label>성별<select id="nsex"><option value="1">남</option><option value="0">여</option></select></label>
+  <label>보완할 오행<select id="need"><option value="auto">자동 (사주 기준)</option><option value="wood">목(木)</option><option value="fire">화(火)</option><option value="earth">토(土)</option><option value="metal">금(金)</option><option value="water">수(水)</option></select></label>
+  <label>끝 글자 소리 (선택)<input id="nfilter" placeholder="예: 준, 연" maxlength="2"></label>
+  <button type="button" id="ngo">이름 추천</button>
+ </div>
+ <p class="note" id="nbase"></p>
+ <div class="nm" id="nres"></div>
+ <button type="button" id="nmore" class="ghost wide" hidden>더 보기</button>
+</div></section>
+</main>
+
+<div class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="pt"><div class="pin"><div class="ptop"><h2 id="pt"></h2><button type="button" class="ghost" id="pclose" aria-label="닫기">✕</button></div><div id="pb"></div></div></div>
+
+<footer class="band"><div class="wrap">
+ 계산: lunar-javascript 1.7.8 (절기·간지 천문 계산), 한국 표준시·서머타임 변경 이력(1908~1988) 자동 반영. 신살·궁합·작명 기준은 유파마다 조금씩 다릅니다. 결과는 전통 명리 해석으로, 재미와 참고용입니다.
+</div></footer>
+
+<script src="lunar.js"></script>
+<script src="js/core.js"></script>
+<script src="js/reading.js"></script>
+<script src="js/saju-view.js"></script>
+<script src="js/match.js"></script>
+<script src="js/naming.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/analysis.js"></script>
+<script src="js/detail.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/main.js"></script>
+<script src="js/tests.js"></script>
+</body>
+</html>
