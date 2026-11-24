@@ -208,21 +208,62 @@ body.admin .adm{background:var(--ink);color:var(--bg)}
 .wxw{margin-left:auto;display:flex;flex-wrap:wrap;gap:6px;align-items:center}.wxbtn{background:none;border:0;color:var(--sub);font:14px "IBM Plex Sans KR",sans-serif;min-height:32px;padding:0;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}.wxbtn:hover{color:var(--ink)}#wxsel{min-height:36px;font-size:14px}
 .maker{font-size:14px;letter-spacing:.02em}.maker b{font-weight:700;color:var(--ink)}
 @media(max-width:600px){.wxw{margin-left:0;flex-basis:100%}}
+/* ── 상단 히어로: 먹색 바탕 + 오방색 ── */
+header.hero{position:relative;overflow:hidden;background:#111216;color:#ecebe6;padding-bottom:0;color-scheme:dark}
+header.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+ radial-gradient(520px 300px at 88% 10%,rgb(216 68 58/.22),transparent 70%),
+ radial-gradient(460px 280px at 6% 110%,rgb(47 138 95/.20),transparent 70%),
+ radial-gradient(380px 260px at 60% 120%,rgb(44 62 107/.35),transparent 70%)}
+header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,#2f8a5f 0 20%,#d8443a 20% 40%,#d39a1f 40% 60%,#c9ccd3 60% 80%,#2c3e6b 80%)}
+header.hero .wrap{position:relative}
+header.hero .topbar{color:#a9a8a3;border-bottom-color:rgb(255 255 255/.12)}
+header.hero .topbar b{color:#fff}
+header.hero .wxbtn{color:#c9c8c2}header.hero .wxbtn:hover{color:#fff}
+header.hero #wxsel{background:#1c1d23;color:#ecebe6;border-color:rgb(255 255 255/.2)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,56px);align-items:center;padding:clamp(18px,3.5vw,40px) 0 clamp(18px,3vw,30px)}
+.kicker{margin:0 0 10px;font:700 15px "Noto Serif KR",serif;letter-spacing:.28em;color:#f06a5e}
+header.hero h1{font-size:clamp(44px,7.4vw,84px);line-height:1;color:#f6f4ec;margin:0 0 14px;letter-spacing:-.01em}
+header.hero .lede{color:#bdbcb6;font-size:17px}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0}
+.chips li{font-size:13px;color:#e6e4dc;border:1px solid rgb(255 255 255/.18);background:rgb(255 255 255/.05);border-radius:99px;padding:5px 12px}
+.deco{display:grid;grid-template-columns:repeat(4,clamp(46px,6vw,72px));gap:clamp(6px,.9vw,10px);text-align:center}
+.deco span{font:700 13px "Noto Serif KR",serif;color:#8f9096;padding-bottom:2px}
+.deco i{font:900 clamp(26px,3.6vw,44px)/1 "Noto Serif KR",serif;font-style:normal;color:#fff;aspect-ratio:1;display:grid;place-items:center;border-radius:12px;box-shadow:inset 0 -5px 0 rgb(0 0 0/.2),inset 0 2px 0 rgb(255 255 255/.18),0 10px 24px rgb(0 0 0/.35);animation:rise .7s ease both}
+.deco i:nth-of-type(n+5){animation-delay:.08s}
+.deco i.water{background:#2c3e6b}.deco i.metal{background:#c9ccd3;color:#1b1c20}.deco i.earth{background:#d39a1f}.deco i.fire{background:#d8443a}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+header.hero .tabs{border-bottom:0;margin-top:0;padding-bottom:6px}
+header.hero .tabs a{color:#a9a8a3;border-bottom-width:3px}
+header.hero .tabs a:hover{color:#fff}
+header.hero .tabs a.on{color:#fff;border-color:#f06a5e}
+@media(max-width:720px){.hgrid{grid-template-columns:minmax(0,1fr)}.deco{grid-template-columns:repeat(4,minmax(0,52px));justify-content:start}.deco span{display:none}}
+@media(prefers-reduced-motion:reduce){.deco i{animation:none}}
 footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 @media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
 @media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
 </style>
 </head>
 <body>
-<header class="band"><div class="wrap">
+<header class="band hero"><div class="wrap">
  <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span class="wxw"><button type="button" id="tbwx" class="wxbtn">날씨 불러오는 중…</button><select id="wxsel" hidden aria-label="날씨 지역 선택"></select></span></div>
- <h1>사주 만세력</h1>
- <p class="lede">절기 기준 만세력으로 사주, 평생운, 궁합, 이름짓기까지 한 번에 봅니다.</p>
+ <div class="hgrid">
+  <div class="hl">
+   <p class="kicker">四柱八字 · 宮合 · 作名</p>
+   <h1>사주 만세력</h1>
+   <p class="lede">절기 기준 만세력으로 사주, 평생운, 궁합, 이름짓기까지 한 번에 봅니다.</p>
+   <ul class="chips"><li>절기·서머타임 자동 보정</li><li>용신·대운·신년운세</li><li>대법원 인명용 한자 9,494자</li></ul>
+  </div>
+  <div class="deco" aria-hidden="true">
+   <span>時</span><span>日</span><span>月</span><span>年</span>
+   <i class="water">癸</i><i class="metal">庚</i><i class="metal">辛</i><i class="metal">庚</i>
+   <i class="earth">未</i><i class="earth">辰</i><i class="fire">巳</i><i class="fire">午</i>
+  </div>
+ </div>
  <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a></nav>
 </div></header>
 <main id="v-saju">
 
-<section class="band" style="padding-top:8px"><div class="wrap">
+<section class="band" style="padding-top:28px"><div class="wrap">
  <div id="f" class="form" role="form">
   <label>이름<input id="nm" placeholder="예: 홍길동" maxlength="20"></label>
   <label>달력<select id="cal"><option value="s">양력</option><option value="l">음력</option><option value="ll">음력(윤달)</option></select></label>
@@ -337,7 +378,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </main>
 
 <main id="v-match" hidden>
-<section class="band" style="padding-top:8px"><div class="wrap">
+<section class="band" style="padding-top:28px"><div class="wrap">
  <div class="pair">
   <div class="form who" id="ga"></div>
   <div class="form who" id="gb"></div>
@@ -359,7 +400,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </main>
 
 <main id="v-name" hidden>
-<section class="band" style="padding-top:8px"><div class="wrap">
+<section class="band" style="padding-top:28px"><div class="wrap">
  <h2>내 이름 풀이</h2>
  <div class="form" id="af">
   <label>성<select id="as"></select></label>
@@ -403,19 +444,19 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242314"></script>
-<script src="js/core.js?v=202611242314"></script>
-<script src="js/hanja-db.js?v=202611242314"></script>
-<script src="js/reading.js?v=202611242314"></script>
-<script src="js/saju-view.js?v=202611242314"></script>
-<script src="js/match.js?v=202611242314"></script>
-<script src="js/naming.js?v=202611242314"></script>
-<script src="js/tools.js?v=202611242314"></script>
-<script src="js/analysis.js?v=202611242314"></script>
-<script src="js/detail.js?v=202611242314"></script>
-<script src="js/admin.js?v=202611242314"></script>
-<script src="js/main.js?v=202611242314"></script>
-<script src="js/topbar.js?v=202611242314"></script>
-<script src="js/tests.js?v=202611242314"></script>
+<script src="lunar.js?v=202611242329"></script>
+<script src="js/core.js?v=202611242329"></script>
+<script src="js/hanja-db.js?v=202611242329"></script>
+<script src="js/reading.js?v=202611242329"></script>
+<script src="js/saju-view.js?v=202611242329"></script>
+<script src="js/match.js?v=202611242329"></script>
+<script src="js/naming.js?v=202611242329"></script>
+<script src="js/tools.js?v=202611242329"></script>
+<script src="js/analysis.js?v=202611242329"></script>
+<script src="js/detail.js?v=202611242329"></script>
+<script src="js/admin.js?v=202611242329"></script>
+<script src="js/main.js?v=202611242329"></script>
+<script src="js/topbar.js?v=202611242329"></script>
+<script src="js/tests.js?v=202611242329"></script>
 </body>
 </html>
