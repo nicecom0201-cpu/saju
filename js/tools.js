@@ -10,20 +10,27 @@ const SLOT={1:['a1','a1h'],2:['a2','a2h']};
 // 입력칸에서 첫 번째 완성된 한글 글자만 꺼냄 (조합 중인 자음·모음은 무시)
 function sylOf(k){const m=$(SLOT[k][0]).value.match(/[가-힣]/);return m?m[0]:''}
 function hjOpts(k){const syl=sylOf(k),sel=$(SLOT[k][1]);if(sel.dataset.syl===syl&&sel.options.length)return;sel.dataset.syl=syl;
- const list=syl?HJ.map((h,i)=>[h,i]).filter(([h])=>h[1]===syl||h[2]===syl):[];
- sel.innerHTML=list.map(([h,i])=>`<option value="${i}">${h[0]} · ${h[3]} ${h[1]}</option>`).join('')+`<option value="m">${list.length?'목록에 없음 · 직접 입력':(syl?`'${syl}' 한자 없음 · 직접 입력`:'글자를 먼저 입력하세요')}</option>`;
+ // 1) 직접 고른 작명용 한자(획수·오행 검증) 2) 대법원 인명용 한자 중 자주 쓰는 글자 3) 나머지 인명용 한자
+ const cur=syl?HJ.map((h,i)=>[h,i]).filter(([h])=>h[1]===syl||h[2]===syl):[],have=new Set(cur.map(([h])=>h[0]));
+ const db=(typeof HJDB!=='undefined'&&HJDB[syl]||[]).map((d,j)=>[d,j]).filter(([d])=>!have.has(d[0]));
+ const lab=(c,m,st,e)=>`${c} · ${esc(m||'')} ${syl} (${st}획${e?' · '+ELK[e]:''})`;
+ const o1=cur.map(([h,i])=>`<option value="h:${i}">${lab(h[0],h[3],h[4],h[5])}</option>`).concat(db.filter(([d])=>d[4]).map(([d,j])=>`<option value="d:${j}">${lab(d[0],d[3],d[1],d[2])}</option>`));
+ const o2=db.filter(([d])=>!d[4]).map(([d,j])=>`<option value="d:${j}">${lab(d[0],d[3],d[1],d[2])}</option>`);
+ const tail=`<option value="m">${o1.length+o2.length?'목록에 없음 · 직접 입력':(syl?`'${syl}' 인명용 한자 없음 · 직접 입력`:'글자를 먼저 입력하세요')}</option>`;
+ sel.innerHTML=(o1.length?`<optgroup label="자주 쓰는 한자 (${o1.length})">${o1.join('')}</optgroup>`:'')+(o2.length?`<optgroup label="그 밖의 인명용 한자 (${o2.length})">${o2.join('')}</optgroup>`:'')+tail;
  manualUI()}
 function manualUI(){const need=[1,2].filter(k=>$(SLOT[k][1]).value==='m'&&sylOf(k));
  const keep={};need.forEach(k=>{['c','s','e'].forEach(f=>{const el=$('m'+k+f);if(el)keep['m'+k+f]=el.value})});
  $('amanual').hidden=!need.length;
  $('amanual').innerHTML=need.map(k=>`<label>${esc(sylOf(k))} 한자<input id="m${k}c" maxlength="1" placeholder="예: 俊"></label>
   <label>원획 수<input id="m${k}s" type="number" min="1" max="40" inputmode="numeric" placeholder="예: 9"></label>
-  <label>자원오행<select id="m${k}e">${ORD.map(o=>`<option value="${o}">${ELN[o]}</option>`).join('')}</select></label>`).join('')
+  <label>자원오행<select id="m${k}e"><option value="">모름</option>${ORD.map(o=>`<option value="${o}">${ELN[o]}</option>`).join('')}</select></label>`).join('')
   +(need.length?'<p class="note" style="grid-column:1/-1;margin:0">목록에 없는 한자는 직접 입력할 수 있어요. 원획과 자원오행은 작명용 옥편이나 대법원 인명용 한자 검색에서 확인할 수 있어요.</p>':'');
  Object.entries(keep).forEach(([id,v])=>{if($(id))$(id).value=v})}
 function slotChar(k){const syl=sylOf(k),v=$(SLOT[k][1]).value;
  if(!syl)return null;
- if(v!=='m'&&v!==''){const h=HJ[+v];return {c:h[0],r:syl,s:h[4],e:h[5],m:h[3]}}
+ if(v.startsWith('h:')){const h=HJ[+v.slice(2)];return {c:h[0],r:syl,s:h[4],e:h[5],m:h[3]}}
+ if(v.startsWith('d:')){const d=HJDB[syl][+v.slice(2)];return {c:d[0],r:syl,s:d[1],e:d[2],m:d[3]}}
  const s=Number(($('m'+k+'s')||{}).value),c=(($('m'+k+'c')||{}).value||'').trim();
  if(!s)return {err:`'${syl}'의 원획 수를 입력해 주세요.`};
  return {c:c||'?',r:syl,s,e:$('m'+k+'e').value,m:''}}
@@ -49,7 +56,7 @@ function nameAnalyze(){
  const P4=[nums.filter(n=>GIL.has(n)).length*10,bal?10:3,Math.round(flows.reduce((a,f)=>a+({gen:10,same:6,ok:6,clash:0})[f]*(2/flows.length),0)),Math.round(chars.reduce((a,c)=>a+(need.includes(c.e)?15:c.e===CUR.hee?12:excess.includes(c.e)?0:8)*(2/chars.length),0))];
  LASTNAME={hz,nm,score,grade,nums,parts:P4,els:chars.map(c=>c.e)};
  const R=2*Math.PI*52;
- const elT=chars.map(c=>`${esc(c.c)}(${esc(c.r)}) ${tagc(c.e)}${need.includes(c.e)?'사주에 가장 필요한 용신 기운을 채워 줍니다.':c.e===CUR.hee?'용신을 돕는 희신 기운이라 좋습니다.':excess.includes(c.e)?'이미 많은 기운을 더해 균형을 흔듭니다.':'사주와 무난하게 어울립니다.'}`).join('<br>');
+ const elT=chars.map(c=>`${esc(c.c)}(${esc(c.r)}) ${tagc(c.e)}${!c.e?'부수로는 오행을 알 수 없는 글자라 중립으로 계산했어요. 옥편의 자원오행을 알면 \'목록에 없음 · 직접 입력\'으로 넣어 주세요.':need.includes(c.e)?'사주에 가장 필요한 용신 기운을 채워 줍니다.':c.e===CUR.hee?'용신을 돕는 희신 기운이라 좋습니다.':excess.includes(c.e)?'이미 많은 기운을 더해 균형을 흔듭니다.':'사주와 무난하게 어울립니다.'}`).join('<br>');
  $('ares').innerHTML=`<div class="gtop" style="margin-top:0"><div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${R*score/100} ${R}"/></svg><div><b>${score}</b><span>100점 만점</span></div></div>
  <div><h2 style="margin:0 0 6px"><span style="font:900 40px 'Noto Serif KR',serif">${esc(hz)}</span> ${esc(nm)} · ${grade}</h2>
  <p style="margin:0">${chars.map(c=>c.m?`${esc(c.m)} ${esc(c.r)}`:esc(c.r)).join(' · ')}</p>

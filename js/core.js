@@ -26,7 +26,7 @@ const pad=n=>String(n).padStart(2,'0');
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stars=n=>`<span class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</span>`;
 const ira=w=>(w.charCodeAt(w.length-1)-0xAC00)%28?'이라':'라';
-const tagc=k=>`<span class="tag ${k}">${ELN[k]}</span>`;
+const tagc=k=>k?`<span class="tag ${k}">${ELN[k]}</span>`:'<span class="tag" style="background:var(--line);color:var(--ink)">오행 미상</span>';
 const CS_START={甲:'亥',丙:'寅',戊:'寅',庚:'巳',壬:'申',乙:'午',丁:'酉',己:'酉',辛:'子',癸:'卯'},CS12=['장생','목욕','관대','건록','제왕','쇠','병','사','묘','절','태','양'];
 function ds12(dm,zhi){const Z='子丑寅卯辰巳午未申酉戌亥',a=Z.indexOf(CS_START[dm]),b=Z.indexOf(zhi);return CS12[YANG.includes(dm)?(b-a+12)%12:(a-b+12)%12]}
 function tenGod(dm,g){const a=ORD.indexOf(EL[dm]),b=ORD.indexOf(EL[g]),same=YANG.includes(dm)===YANG.includes(g),r=(b-a+5)%5;
