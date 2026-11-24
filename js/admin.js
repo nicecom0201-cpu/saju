@@ -11,7 +11,7 @@ function applyAdmin(){
  document.body.classList.toggle('admin',ADMIN);
  $('adminbtn').textContent=ADMIN?'관리자 잠금':'관리자';
  $('adminbox').hidden=!ADMIN;$('sv').hidden=!ADMIN;
- if(ADMIN)drawPeople();else{$('people').innerHTML='';drawWho()}
+ if(ADMIN){drawPeople();$('adminbox').scrollIntoView({behavior:'smooth',block:'start'})}else{$('people').innerHTML='';drawWho()}
 }
 function adminForm(mode,msg){
  const set=mode==='set'||mode==='change';

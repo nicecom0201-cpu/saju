@@ -181,11 +181,11 @@ button:hover{opacity:.9}
 .rank button{min-height:36px;padding:0 12px}
 .x{min-height:28px;padding:0 6px;background:none;color:var(--sub);border:0}
 @media(max-width:600px){.rank li{grid-template-columns:2em minmax(0,1fr) auto;row-gap:4px}.rank .age,.rank .bar2{display:none}.rank .gr{grid-column:2}.rank button{grid-column:3}}
-.tabs .adm{margin-left:auto;align-self:center;min-height:36px;padding:0 14px;font-size:14px}
-.adminbox{margin-top:14px;border:2px solid var(--ink);border-radius:14px;padding:16px}
+.foot{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}.foot p{margin:0;max-width:80ch}.adm{min-height:40px;padding:0 16px;font-size:14px;flex:none}
+.adminbox{margin-top:0;border:2px solid var(--ink);border-radius:14px;padding:16px}
 .ah{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.ah h2{margin:0;font-size:19px}
 .adminbox .mt td button{min-height:34px;padding:0 10px;text-decoration:none;font-weight:500;font-size:14px}
-body.admin .tabs .adm{background:var(--ink);color:var(--bg)}
+body.admin .adm{background:var(--ink);color:var(--bg)}
 footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 @media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
 @media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
@@ -195,7 +195,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 <header class="band"><div class="wrap">
  <h1>사주 만세력</h1>
  <p class="lede">절기 기준 만세력으로 사주, 평생운, 궁합, 이름짓기까지 한 번에 봅니다.</p>
- <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a><button type="button" class="ghost adm" id="adminbtn">관리자</button></nav>
+ <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a></nav>
 </div></header>
 <main id="v-saju">
 
@@ -214,11 +214,6 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
   <label class="chk"><input id="notime" type="checkbox">시각 모름</label>
   <button type="button" id="go">사주 보기</button>
   <button type="button" id="sv" class="ghost" hidden>저장</button>
- </div>
- <div class="adminbox" id="adminbox" hidden>
-  <div class="ah"><h2>관리자 · 저장한 사람</h2><div class="tools" style="margin:0"><button type="button" class="ghost" id="pinchg">PIN 변경</button><button type="button" class="ghost" id="wipe">저장 목록 전체 삭제</button></div></div>
-  <div class="scroll" id="people"></div>
-  <p class="note">이 목록은 관리자 PIN을 입력했을 때만 보이며, 페이지를 새로 열면 다시 잠깁니다. 정보는 이 기기의 브라우저에만 저장되고 다른 사람의 기기나 서버로 전송되지 않습니다.</p>
  </div>
  <p class="err" id="err" role="status"></p>
 
@@ -372,22 +367,31 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 
 <div class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="pt"><div class="pin"><div class="ptop"><h2 id="pt"></h2><button type="button" class="ghost" id="pclose" aria-label="닫기">✕</button></div><div id="pb"></div></div></div>
 
-<footer class="band"><div class="wrap">
- 계산: lunar-javascript 1.7.8 (절기·간지 천문 계산), 한국 표준시·서머타임 변경 이력(1908~1988) 자동 반영. 신살·궁합·작명 기준은 유파마다 조금씩 다릅니다. 결과는 전통 명리 해석으로, 재미와 참고용입니다.
+<section class="band" style="padding-top:0"><div class="wrap">
+ <div class="adminbox" id="adminbox" hidden>
+  <div class="ah"><h2>관리자 · 저장한 사람</h2><div class="tools" style="margin:0"><button type="button" class="ghost" id="pinchg">PIN 변경</button><button type="button" class="ghost" id="wipe">저장 목록 전체 삭제</button></div></div>
+  <div class="scroll" id="people"></div>
+  <p class="note">이 목록은 관리자 PIN을 입력했을 때만 보이며, 페이지를 새로 열면 다시 잠깁니다. 정보는 이 기기의 브라우저에만 저장되고 다른 사람의 기기나 서버로 전송되지 않습니다.</p>
+ </div>
+</div></section>
+
+<footer class="band"><div class="wrap foot">
+ <p>계산: lunar-javascript 1.7.8 (절기·간지 천문 계산), 한국 표준시·서머타임 변경 이력(1908~1988) 자동 반영. 신살·궁합·작명 기준은 유파마다 조금씩 다릅니다. 결과는 전통 명리 해석으로, 재미와 참고용입니다.</p>
+ <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242251"></script>
-<script src="js/core.js?v=202611242251"></script>
-<script src="js/hanja-db.js?v=202611242251"></script>
-<script src="js/reading.js?v=202611242251"></script>
-<script src="js/saju-view.js?v=202611242251"></script>
-<script src="js/match.js?v=202611242251"></script>
-<script src="js/naming.js?v=202611242251"></script>
-<script src="js/tools.js?v=202611242251"></script>
-<script src="js/analysis.js?v=202611242251"></script>
-<script src="js/detail.js?v=202611242251"></script>
-<script src="js/admin.js?v=202611242251"></script>
-<script src="js/main.js?v=202611242251"></script>
-<script src="js/tests.js?v=202611242251"></script>
+<script src="lunar.js?v=202611242259"></script>
+<script src="js/core.js?v=202611242259"></script>
+<script src="js/hanja-db.js?v=202611242259"></script>
+<script src="js/reading.js?v=202611242259"></script>
+<script src="js/saju-view.js?v=202611242259"></script>
+<script src="js/match.js?v=202611242259"></script>
+<script src="js/naming.js?v=202611242259"></script>
+<script src="js/tools.js?v=202611242259"></script>
+<script src="js/analysis.js?v=202611242259"></script>
+<script src="js/detail.js?v=202611242259"></script>
+<script src="js/admin.js?v=202611242259"></script>
+<script src="js/main.js?v=202611242259"></script>
+<script src="js/tests.js?v=202611242259"></script>
 </body>
 </html>

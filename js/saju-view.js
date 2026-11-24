@@ -61,6 +61,6 @@ function drawPeople(){
 $('sv').addEventListener('click',()=>{if(!ADMIN)return;const v=readForm();if(!v.nm.trim()){$('err').textContent='저장하려면 이름을 입력해 주세요.';$('nm').focus();return}
  const L=people().filter(p=>p.nm!==v.nm);L.push(v);LS.set('saju-people',L);drawPeople();$('err').textContent=`${v.nm} 님을 저장했습니다.`});
 $('people').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b||!ADMIN)return;const L=people();
- if(b.dataset.load!=null){fillForm(L[+b.dataset.load]);run()}
+ if(b.dataset.load!=null){fillForm(L[+b.dataset.load]);run();if(location.hash&&location.hash!=='#saju')location.hash='#saju';$('board').scrollIntoView({behavior:'smooth',block:'center'})}
  if(b.dataset.del!=null){L.splice(+b.dataset.del,1);LS.set('saju-people',L);drawPeople()}});
 
