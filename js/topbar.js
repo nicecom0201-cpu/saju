@@ -49,16 +49,15 @@ function wxPicker(){
 async function startWeather(){wxPicker();await findCity();loadWeather();setInterval(loadWeather,30*60*1000)}
 startWeather();
 
-/* ── 방문자 수 (가입이 필요 없는 무료 카운터 Abacus 사용) ──
+/* ── 방문자 수 (가입이 필요 없는 무료 카운터 CountAPI · countapi.mileshilliard.com) ──
    페이지를 열 때마다 1씩 올립니다(새로고침 포함). 개인정보는 보내지 않고 숫자만 올립니다. */
-const VC_NS='nicecom0201-saju';
+const VC_KEY='nicecom0201-saju';
 async function visitCount(){
  const el=$('tbvc');
  try{
   const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul'}).format(new Date()).replace(/-/g,'');
-  const act='hit'; // 들어올 때마다 1씩 올림 (새로고침 포함)
-  const one=async k=>{const r=await fetch(`https://abacus.jasoncameron.dev/${act}/${VC_NS}/${k}`);if(r.status===404)return 0;if(!r.ok)throw 0;const j=await r.json();return Number(j.value)||0};
-  const [today,total]=await Promise.all([one('d'+day),one('total')]);
+  const hit=async k=>{const r=await fetch(`https://countapi.mileshilliard.com/api/v1/hit/${VC_KEY}-${k}`);if(!r.ok)throw 0;const j=await r.json();return Number(j.value)||0};
+  const [today,total]=await Promise.all([hit('d'+day),hit('total')]);
   el.innerHTML=`오늘 <b>${today.toLocaleString('ko-KR')}</b><span class="hl"> · 전체 ${total.toLocaleString('ko-KR')}</span>`;
   el.hidden=false;
  }catch(e){el.hidden=true}
