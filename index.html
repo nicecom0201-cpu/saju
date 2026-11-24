@@ -218,7 +218,7 @@ header.hero::before{content:"";position:absolute;inset:0;pointer-events:none;bac
 header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,#2f8a5f 0 20%,#d8443a 20% 40%,#d39a1f 40% 60%,#c9ccd3 60% 80%,#2c3e6b 80%)}
 header.hero .wrap{position:relative}
 header.hero .topbar{color:#a9a8a3;border-bottom-color:rgb(255 255 255/.12)}
-header.hero .topbar b{color:#fff}header.hero .wxbtn b{color:#fff}
+header.hero .topbar b{color:#fff}.tbvc .hl{color:inherit}@media(max-width:600px){.tbvc .hl{display:none}}header.hero .wxbtn b{color:#fff}
 header.hero .wxbtn{color:#c9c8c2}header.hero .wxbtn:hover{color:#fff}
 header.hero #wxsel{background:#1c1d23;color:#ecebe6;border-color:rgb(255 255 255/.2)}
 .hgrid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,56px);align-items:center;padding:clamp(18px,3.5vw,40px) 0 clamp(18px,3vw,30px)}
@@ -314,7 +314,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </head>
 <body>
 <header class="band hero"><div class="wrap">
- <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span class="wxw"><button type="button" id="tbwx" class="wxbtn">날씨 불러오는 중…</button><select id="wxsel" hidden aria-label="날씨 지역 선택"></select></span></div>
+ <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span id="tbvc" class="tbvc" hidden></span><span class="wxw"><button type="button" id="tbwx" class="wxbtn">날씨 불러오는 중…</button><select id="wxsel" hidden aria-label="날씨 지역 선택"></select></span></div>
  <div class="hgrid">
   <div class="hl">
    <p class="kicker">四柱八字 · 宮合 · 作名</p>
@@ -584,23 +584,23 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242358"></script>
-<script src="js/core.js?v=202611242358"></script>
-<script src="js/hanja-db.js?v=202611242358"></script>
-<script src="js/reading.js?v=202611242358"></script>
-<script src="js/saju-view.js?v=202611242358"></script>
-<script src="js/match.js?v=202611242358"></script>
-<script src="js/naming.js?v=202611242358"></script>
-<script src="js/tools.js?v=202611242358"></script>
-<script src="js/analysis.js?v=202611242358"></script>
-<script src="js/detail.js?v=202611242358"></script>
-<script src="js/admin.js?v=202611242358"></script>
-<script src="js/extra-tabs.js?v=202611242358"></script>
-<script src="js/tojeong.js?v=202611242358"></script>
-<script src="js/dream.js?v=202611242358"></script>
-<script src="js/tarot.js?v=202611242358"></script>
-<script src="js/main.js?v=202611242358"></script>
-<script src="js/topbar.js?v=202611242358"></script>
-<script src="js/tests.js?v=202611242358"></script>
+<script src="lunar.js?v=202611250016"></script>
+<script src="js/core.js?v=202611250016"></script>
+<script src="js/hanja-db.js?v=202611250016"></script>
+<script src="js/reading.js?v=202611250016"></script>
+<script src="js/saju-view.js?v=202611250016"></script>
+<script src="js/match.js?v=202611250016"></script>
+<script src="js/naming.js?v=202611250016"></script>
+<script src="js/tools.js?v=202611250016"></script>
+<script src="js/analysis.js?v=202611250016"></script>
+<script src="js/detail.js?v=202611250016"></script>
+<script src="js/admin.js?v=202611250016"></script>
+<script src="js/extra-tabs.js?v=202611250016"></script>
+<script src="js/tojeong.js?v=202611250016"></script>
+<script src="js/dream.js?v=202611250016"></script>
+<script src="js/tarot.js?v=202611250016"></script>
+<script src="js/main.js?v=202611250016"></script>
+<script src="js/topbar.js?v=202611250016"></script>
+<script src="js/tests.js?v=202611250016"></script>
 </body>
 </html>

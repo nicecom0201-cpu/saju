@@ -48,3 +48,21 @@ function wxPicker(){
 }
 async function startWeather(){wxPicker();await findCity();loadWeather();setInterval(loadWeather,30*60*1000)}
 startWeather();
+
+/* ── 방문자 수 (가입이 필요 없는 무료 카운터 Abacus 사용) ──
+   같은 브라우저는 하루에 한 번만 셉니다. 개인정보는 보내지 않고 숫자만 올립니다. */
+const VC_NS='nicecom0201-saju';
+async function visitCount(){
+ const el=$('tbvc');
+ try{
+  const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul'}).format(new Date()).replace(/-/g,'');
+  let seen=null;try{seen=localStorage.getItem('vc-day')}catch(e){}
+  const act=seen===day?'get':'hit';
+  const one=async k=>{const r=await fetch(`https://abacus.jasoncameron.dev/${act}/${VC_NS}/${k}`);if(r.status===404)return 0;if(!r.ok)throw 0;const j=await r.json();return Number(j.value)||0};
+  const [today,total]=await Promise.all([one('d'+day),one('total')]);
+  if(act==='hit')try{localStorage.setItem('vc-day',day)}catch(e){}
+  el.innerHTML=`오늘 <b>${today.toLocaleString('ko-KR')}</b><span class="hl"> · 전체 ${total.toLocaleString('ko-KR')}</span>`;
+  el.hidden=false;
+ }catch(e){el.hidden=true}
+}
+visitCount();
