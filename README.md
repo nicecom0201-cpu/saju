@@ -19,7 +19,8 @@ js/
   analysis.js     용신, 명식 상세, 합·충 그림, 인생 그래프, 커플 달력
   detail.js       상세 창(대운·세운·날짜), 이름 비교
   admin.js        관리자 모드 (PIN 잠금)
-  main.js         탭 전환과 시작 — 반드시 마지막에 불러옵니다
+  main.js         탭 전환과 시작
+  topbar.js       상단 실시간 날짜·시간·요일·날씨 (Open-Meteo 무료 API)
   tests.js        자동 테스트
 ```
 

@@ -186,6 +186,11 @@ button:hover{opacity:.9}
 .ah{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.ah h2{margin:0;font-size:19px}
 .adminbox .mt td button{min-height:34px;padding:0 10px;text-decoration:none;font-weight:500;font-size:14px}
 body.admin .adm{background:var(--ink);color:var(--bg)}
+.topbar{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;font-size:14px;color:var(--sub);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.topbar b{font:700 15px "IBM Plex Sans KR",sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
+#tbwx{margin-left:auto}
+.maker{font-size:14px;letter-spacing:.02em}.maker b{font-weight:700;color:var(--ink)}
+@media(max-width:600px){#tbwx{margin-left:0;flex-basis:100%}}
 footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 @media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
 @media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
@@ -193,6 +198,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </head>
 <body>
 <header class="band"><div class="wrap">
+ <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span id="tbwx">날씨 불러오는 중…</span></div>
  <h1>사주 만세력</h1>
  <p class="lede">절기 기준 만세력으로 사주, 평생운, 궁합, 이름짓기까지 한 번에 봅니다.</p>
  <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a></nav>
@@ -376,22 +382,23 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </div></section>
 
 <footer class="band"><div class="wrap foot">
- <p>계산: lunar-javascript 1.7.8 (절기·간지 천문 계산), 한국 표준시·서머타임 변경 이력(1908~1988) 자동 반영. 신살·궁합·작명 기준은 유파마다 조금씩 다릅니다. 결과는 전통 명리 해석으로, 재미와 참고용입니다.</p>
+ <p class="maker">Made by <b>LORD</b></p>
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242259"></script>
-<script src="js/core.js?v=202611242259"></script>
-<script src="js/hanja-db.js?v=202611242259"></script>
-<script src="js/reading.js?v=202611242259"></script>
-<script src="js/saju-view.js?v=202611242259"></script>
-<script src="js/match.js?v=202611242259"></script>
-<script src="js/naming.js?v=202611242259"></script>
-<script src="js/tools.js?v=202611242259"></script>
-<script src="js/analysis.js?v=202611242259"></script>
-<script src="js/detail.js?v=202611242259"></script>
-<script src="js/admin.js?v=202611242259"></script>
-<script src="js/main.js?v=202611242259"></script>
-<script src="js/tests.js?v=202611242259"></script>
+<script src="lunar.js?v=202611242304"></script>
+<script src="js/core.js?v=202611242304"></script>
+<script src="js/hanja-db.js?v=202611242304"></script>
+<script src="js/reading.js?v=202611242304"></script>
+<script src="js/saju-view.js?v=202611242304"></script>
+<script src="js/match.js?v=202611242304"></script>
+<script src="js/naming.js?v=202611242304"></script>
+<script src="js/tools.js?v=202611242304"></script>
+<script src="js/analysis.js?v=202611242304"></script>
+<script src="js/detail.js?v=202611242304"></script>
+<script src="js/admin.js?v=202611242304"></script>
+<script src="js/main.js?v=202611242304"></script>
+<script src="js/topbar.js?v=202611242304"></script>
+<script src="js/tests.js?v=202611242304"></script>
 </body>
 </html>
