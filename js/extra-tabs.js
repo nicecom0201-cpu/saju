@@ -3,7 +3,7 @@
 /* ============ 29. 기준 사람 안내줄 (운세·택일 탭) ============ */
 function drawWhoBars(C){
  const v=C.v,s=C.inSolar,txt=`<b>${esc(v.nm||'사주 탭에 입력한 사람')}</b><span class="age">양력 ${s.getYear()}.${pad(s.getMonth())}.${pad(s.getDay())}${v.notime?'':' '+pad(s.getHour())+':'+pad(s.getMinute())} · ${KO[C.dg]}${ELK[EL[C.dg]]} 일간 · ${KO[C.P[3].gz[1]]}띠</span> 기준<a href="#saju">사주 바꾸기 →</a>`;
- for(const id of ['wb1','wb2'])$(id).innerHTML=txt;
+ for(const id of ['wb1','wb2','wb3'])$(id).innerHTML=txt;
 }
 
 /* ============ 30. 띠별 운세 ============ */
