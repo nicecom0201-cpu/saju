@@ -307,10 +307,15 @@ header.hero.band{padding-top:clamp(14px,2vw,22px)}
 .tko{font:900 22px "Noto Serif KR",serif}.ten{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5d5f66}
 .tmean{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}.tmean h3{margin:0;font:700 18px "Noto Serif KR",serif}.tmean p{margin:6px 0 0}
 @media(prefers-reduced-motion:reduce){.tcard>span{transition:none}.cards9 a{transition:none}}
-.dragon{position:absolute;right:-12px;top:22px;width:clamp(150px,30vw,340px);aspect-ratio:320/170;height:auto;overflow:visible;pointer-events:none;z-index:0;filter:drop-shadow(0 10px 16px rgb(0 0 0/.4))}
+.dragon{position:absolute;right:-8px;top:28px;width:clamp(170px,31vw,380px);pointer-events:none;z-index:0;animation:dfloat 7s ease-in-out infinite;transform-origin:60% 50%}
+.dragon img{display:block;width:100%;height:auto;filter:drop-shadow(0 12px 18px rgb(0 0 0/.45))}
+.pglow{position:absolute;left:5.6%;top:38%;width:22%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgb(255 226 140/.75),rgb(255 190 80/.25) 40%,transparent 70%);mix-blend-mode:screen;animation:pglow 2.6s ease-in-out infinite}
+@keyframes dfloat{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-7px) rotate(-1.2deg)}50%{transform:translateY(-2px) rotate(.4deg)}75%{transform:translateY(-9px) rotate(-.6deg)}}
+@keyframes pglow{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.85)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.dragon,.pglow{animation:none}}
 header.hero .topbar,.hgrid,header.hero .tabs{position:relative;z-index:1}
-@media(min-width:721px){.deco{margin-top:clamp(70px,9vw,120px)}}
-@media(max-width:720px){.dragon{top:96px;right:-18px;width:132px}header.hero h1{position:relative;z-index:2}}
+@media(min-width:721px){.deco{margin-top:clamp(84px,11.5vw,150px)}}
+@media(max-width:720px){.dragon{top:100px;right:-24px;width:132px}header.hero h1{position:relative;z-index:2}}
 footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 @media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
 @media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
@@ -318,7 +323,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </head>
 <body>
 <header class="band hero"><div class="wrap">
- <svg id="dragon" class="dragon" aria-hidden="true" focusable="false"></svg>
+ <div class="dragon" aria-hidden="true"><picture><source srcset="dragon.webp" type="image/webp"><img src="dragon.png" alt="" width="900" height="445" decoding="async" fetchpriority="low"></picture><span class="pglow"></span></div>
  <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span id="tbvc" class="tbvc" hidden></span><span class="wxw"><button type="button" id="tbwx" class="wxbtn">날씨 불러오는 중…</button><select id="wxsel" hidden aria-label="날씨 지역 선택"></select></span></div>
  <div class="hgrid">
   <div class="hl">
@@ -589,24 +594,23 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611250532"></script>
-<script src="js/core.js?v=202611250532"></script>
-<script src="js/hanja-db.js?v=202611250532"></script>
-<script src="js/reading.js?v=202611250532"></script>
-<script src="js/saju-view.js?v=202611250532"></script>
-<script src="js/match.js?v=202611250532"></script>
-<script src="js/naming.js?v=202611250532"></script>
-<script src="js/tools.js?v=202611250532"></script>
-<script src="js/analysis.js?v=202611250532"></script>
-<script src="js/detail.js?v=202611250532"></script>
-<script src="js/admin.js?v=202611250532"></script>
-<script src="js/extra-tabs.js?v=202611250532"></script>
-<script src="js/tojeong.js?v=202611250532"></script>
-<script src="js/dream.js?v=202611250532"></script>
-<script src="js/tarot.js?v=202611250532"></script>
-<script src="js/main.js?v=202611250532"></script>
-<script src="js/topbar.js?v=202611250532"></script>
-<script src="js/dragon.js?v=202611250532"></script>
-<script src="js/tests.js?v=202611250532"></script>
+<script src="lunar.js?v=202611250538"></script>
+<script src="js/core.js?v=202611250538"></script>
+<script src="js/hanja-db.js?v=202611250538"></script>
+<script src="js/reading.js?v=202611250538"></script>
+<script src="js/saju-view.js?v=202611250538"></script>
+<script src="js/match.js?v=202611250538"></script>
+<script src="js/naming.js?v=202611250538"></script>
+<script src="js/tools.js?v=202611250538"></script>
+<script src="js/analysis.js?v=202611250538"></script>
+<script src="js/detail.js?v=202611250538"></script>
+<script src="js/admin.js?v=202611250538"></script>
+<script src="js/extra-tabs.js?v=202611250538"></script>
+<script src="js/tojeong.js?v=202611250538"></script>
+<script src="js/dream.js?v=202611250538"></script>
+<script src="js/tarot.js?v=202611250538"></script>
+<script src="js/main.js?v=202611250538"></script>
+<script src="js/topbar.js?v=202611250538"></script>
+<script src="js/tests.js?v=202611250538"></script>
 </body>
 </html>

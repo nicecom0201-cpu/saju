@@ -24,7 +24,7 @@ js/
   dream.js        꿈해몽 사전 (약 100개, 새로 쓴 풀이)
   tarot.js        타로 메이저 아르카나 22장 (자체 카드 디자인)
   main.js         메뉴 전환과 시작
-  dragon.js       상단 오른쪽에서 헤엄치는 용 (자체 디자인 SVG 애니메이션)
+  dragon.webp/png 상단 오른쪽 용 그림 (CSS로 떠오르기·여의주 빛 효과)
   topbar.js       상단 날짜·시간·방문자 수·날씨 (Open-Meteo 날씨, GeoJS 지역 추정, CountAPI(mileshilliard) 방문자 카운터)
   tests.js        자동 테스트
 ```
