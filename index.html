@@ -238,6 +238,23 @@ header.hero .tabs a:hover{color:#fff}
 header.hero .tabs a.on{color:#fff;border-color:#f06a5e}
 @media(max-width:720px){.hgrid{grid-template-columns:minmax(0,1fr)}.deco{grid-template-columns:repeat(4,minmax(0,52px));justify-content:start}.deco span{display:none}}
 @media(prefers-reduced-motion:reduce){.deco i{animation:none}}
+.tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs a{flex:none;white-space:nowrap}
+.whobar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:22px;font-size:15px}
+.whobar b{font-weight:700}.whobar .age{margin:0}.whobar a{margin-left:auto;font-size:14px;color:var(--accent);font-weight:700;text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+.ddtabs{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;gap:2px;margin-bottom:14px;background:var(--card)}
+.ddtabs button{background:none;color:var(--sub);min-height:36px;border-radius:99px;padding:0 16px;font-weight:700}.ddtabs button.on{background:var(--ink);color:var(--bg)}
+.ddg{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.ddg>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.ddg>div.me{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.ddg .hd{display:flex;align-items:center;gap:10px}.ddg .zz{font:900 30px/1 "Noto Serif KR",serif;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;color:#fff}
+.ddg .zz.metal{color:#1b1c20}.ddg .nm{font-weight:700}.ddg .yr{font-size:12px;color:var(--sub)}
+.ddg p{margin:8px 0 0;font-size:14px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px;margin-top:6px}
+.mgrid>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.mgrid .k{font-size:13px;color:var(--sub)}.mgrid .v{font:700 20px/1.35 "Noto Serif KR",serif}.mgrid .v small{font:400 14px "IBM Plex Sans KR",sans-serif;color:var(--sub);margin-left:6px}
+.mcal .d{min-height:84px}.mcal .d .lu{display:block;font-size:12px;color:var(--sub)}.mcal .d .jq{display:block;font-size:12px;color:var(--fire);font-weight:700}
+.mcal .d.sun .n{color:var(--fire)}
+#jqt td,#jqt th{text-align:center}#jqt td:first-child{color:var(--ink);font-weight:700}#jqt .now td{background:light-dark(#fbe6e4,#3a1c1a)}
 footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 @media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
 @media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
@@ -259,7 +276,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
    <i class="earth">未</i><i class="earth">辰</i><i class="fire">巳</i><i class="fire">午</i>
   </div>
  </div>
- <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a></nav>
+ <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#luck" data-t="luck">운세</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a><a href="#taek" data-t="taek">택일</a><a href="#manse" data-t="manse">만세력</a></nav>
 </div></header>
 <main id="v-saju">
 
@@ -329,37 +346,6 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </div></section>
 
 <section class="band" style="padding-top:0"><div class="wrap">
- <h2>오늘의 운세</h2>
- <div id="today"></div>
- <h2 style="margin-top:28px" id="moh">월별 운세</h2>
- <div class="mo" id="mo"></div>
-</div></section>
-
-<section class="band" style="padding-top:0"><div class="wrap">
- <h2>신년운세</h2>
- <div class="form" style="grid-template-columns:repeat(auto-fit,minmax(150px,220px))"><label>연도<select id="ny"></select></label></div>
- <div id="nyr" style="margin-top:14px"></div>
-</div></section>
-
-<section class="band" style="padding-top:0"><div class="wrap">
- <h2>운세 달력</h2>
- <div class="calnav"><button type="button" class="ghost" id="cprev" aria-label="이전 달">◀</button><b id="ctitle"></b><button type="button" class="ghost" id="cnext" aria-label="다음 달">▶</button></div>
- <div class="cal" id="calg"></div>
- <p class="note">별점은 그 달 날짜끼리 비교한 상대 점수입니다. 진한 칸이 좋은 날, 붉은 점이 일지와 충돌하는 날입니다. 날짜를 누르면 그날의 상세 풀이와 시간대별 운세가 열립니다.</p>
-</div></section>
-
-<section class="band" style="padding-top:0"><div class="wrap">
- <h2>택일 · 좋은 날 찾기</h2>
- <div class="form">
-  <label>목적<select id="tp"><option value="wed">결혼·약혼</option><option value="move">이사·입주</option><option value="biz">계약·개업</option><option value="exam">시험·면접</option><option value="trip">여행·출장</option></select></label>
-  <label>기간<select id="tr"><option value="30">앞으로 30일</option><option value="90" selected>앞으로 90일</option><option value="180">앞으로 6개월</option><option value="365">앞으로 1년</option></select></label>
-  <label class="chk"><input type="checkbox" id="tw">궁합 탭의 둘째 사람도 함께</label>
-  <button type="button" id="tgo">좋은 날 찾기</button>
- </div>
- <div class="rd" id="tres" style="margin-top:14px"></div>
-</div></section>
-
-<section class="band" style="padding-top:0"><div class="wrap">
  <h2>평생 사주</h2>
  <div class="life" id="life"></div>
  <h3 style="font:700 18px 'Noto Serif KR',serif;margin:0 0 10px">대운별 운의 흐름</h3>
@@ -374,7 +360,50 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <p class="note" id="lifenote"></p>
 </div></section>
 
+</main>
 
+<main id="v-luck" hidden>
+<section class="band" style="padding-top:28px"><div class="wrap">
+ <div class="whobar" id="wb1"></div>
+ <h2>오늘의 운세</h2>
+ <div id="today"></div>
+ <h2 style="margin-top:28px" id="moh">월별 운세</h2>
+ <div class="mo" id="mo"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>띠별 운세</h2>
+ <div class="ddtabs" role="tablist" id="ddsel"><button type="button" data-p="d" class="on">오늘</button><button type="button" data-p="m">이번 달</button><button type="button" data-p="y">올해</button></div>
+ <div class="ddg" id="ddg"></div>
+ <p class="note" id="ddnote"></p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>운세 달력</h2>
+ <div class="calnav"><button type="button" class="ghost" id="cprev" aria-label="이전 달">◀</button><b id="ctitle"></b><button type="button" class="ghost" id="cnext" aria-label="다음 달">▶</button></div>
+ <div class="cal" id="calg"></div>
+ <p class="note">별점은 그 달 날짜끼리 비교한 상대 점수입니다. 진한 칸이 좋은 날, 붉은 점이 일지와 충돌하는 날입니다. 날짜를 누르면 그날의 상세 풀이와 시간대별 운세가 열립니다.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>신년운세</h2>
+ <div class="form" style="grid-template-columns:repeat(auto-fit,minmax(150px,220px))"><label>연도<select id="ny"></select></label></div>
+ <div id="nyr" style="margin-top:14px"></div>
+</div></section>
+</main>
+
+<main id="v-taek" hidden>
+<section class="band" style="padding-top:28px"><div class="wrap">
+ <div class="whobar" id="wb2"></div>
+ <h2>택일 · 좋은 날 찾기</h2>
+ <div class="form">
+  <label>목적<select id="tp"><option value="wed">결혼·약혼</option><option value="move">이사·입주</option><option value="biz">계약·개업</option><option value="exam">시험·면접</option><option value="trip">여행·출장</option></select></label>
+  <label>기간<select id="tr"><option value="30">앞으로 30일</option><option value="90" selected>앞으로 90일</option><option value="180">앞으로 6개월</option><option value="365">앞으로 1년</option></select></label>
+  <label class="chk"><input type="checkbox" id="tw">궁합 탭의 둘째 사람도 함께</label>
+  <button type="button" id="tgo">좋은 날 찾기</button>
+ </div>
+ <div class="rd" id="tres" style="margin-top:14px"></div>
+</div></section>
 </main>
 
 <main id="v-match" hidden>
@@ -429,6 +458,34 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </div></section>
 </main>
 
+<main id="v-manse" hidden>
+<section class="band" style="padding-top:28px"><div class="wrap">
+ <h2>날짜 변환 · 간지 조회</h2>
+ <div class="form" id="mf">
+  <label>달력<select id="mcal"><option value="s">양력</option><option value="l">음력</option><option value="ll">음력(윤달)</option></select></label>
+  <label>날짜<input id="mdate" type="date"></label>
+  <button type="button" id="mgo">조회</button>
+  <button type="button" class="ghost" id="mtoday">오늘</button>
+ </div>
+ <p class="err" id="merr" role="status"></p>
+ <div id="mres"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2>월간 만세력</h2>
+ <div class="calnav"><button type="button" class="ghost" id="mmprev" aria-label="이전 달">◀</button><b id="mmtitle"></b><button type="button" class="ghost" id="mmnext" aria-label="다음 달">▶</button></div>
+ <div class="cal mcal" id="mmcal"></div>
+ <p class="note">칸마다 양력 날짜, 음력 날짜, 일진이 나옵니다. 붉은 글씨는 절기가 드는 날입니다. 날짜를 누르면 위 조회 칸에 그 날짜가 들어갑니다.</p>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+ <h2 id="jqh">24절기</h2>
+ <div class="form" style="grid-template-columns:repeat(auto-fit,minmax(150px,220px))"><label>연도<select id="jqy"></select></label></div>
+ <div class="scroll"><table class="mt" id="jqt"></table></div>
+ <p class="note">한국 표준시(UTC+9) 기준 시각입니다. ● 표시는 달이 바뀌는 절기(절입)로, 사주의 월주가 이 시각에 바뀝니다.</p>
+</div></section>
+</main>
+
 <div class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="pt"><div class="pin"><div class="ptop"><h2 id="pt"></h2><button type="button" class="ghost" id="pclose" aria-label="닫기">✕</button></div><div id="pb"></div></div></div>
 
 <section class="band" style="padding-top:0"><div class="wrap">
@@ -444,19 +501,20 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242329"></script>
-<script src="js/core.js?v=202611242329"></script>
-<script src="js/hanja-db.js?v=202611242329"></script>
-<script src="js/reading.js?v=202611242329"></script>
-<script src="js/saju-view.js?v=202611242329"></script>
-<script src="js/match.js?v=202611242329"></script>
-<script src="js/naming.js?v=202611242329"></script>
-<script src="js/tools.js?v=202611242329"></script>
-<script src="js/analysis.js?v=202611242329"></script>
-<script src="js/detail.js?v=202611242329"></script>
-<script src="js/admin.js?v=202611242329"></script>
-<script src="js/main.js?v=202611242329"></script>
-<script src="js/topbar.js?v=202611242329"></script>
-<script src="js/tests.js?v=202611242329"></script>
+<script src="lunar.js?v=202611242336"></script>
+<script src="js/core.js?v=202611242336"></script>
+<script src="js/hanja-db.js?v=202611242336"></script>
+<script src="js/reading.js?v=202611242336"></script>
+<script src="js/saju-view.js?v=202611242336"></script>
+<script src="js/match.js?v=202611242336"></script>
+<script src="js/naming.js?v=202611242336"></script>
+<script src="js/tools.js?v=202611242336"></script>
+<script src="js/analysis.js?v=202611242336"></script>
+<script src="js/detail.js?v=202611242336"></script>
+<script src="js/admin.js?v=202611242336"></script>
+<script src="js/extra-tabs.js?v=202611242336"></script>
+<script src="js/main.js?v=202611242336"></script>
+<script src="js/topbar.js?v=202611242336"></script>
+<script src="js/tests.js?v=202611242336"></script>
 </body>
 </html>

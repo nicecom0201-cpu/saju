@@ -19,6 +19,7 @@ js/
   analysis.js     용신, 명식 상세, 합·충 그림, 인생 그래프, 커플 달력
   detail.js       상세 창(대운·세운·날짜), 이름 비교
   admin.js        관리자 모드 (PIN 잠금)
+  extra-tabs.js   운세·택일 탭 안내줄, 띠별 운세, 만세력 탭(날짜 변환·월간 만세력·24절기)
   main.js         탭 전환과 시작
   topbar.js       상단 실시간 날짜·시간·요일·날씨 (Open-Meteo 날씨, GeoJS로 접속 지역 추정)
   tests.js        자동 테스트

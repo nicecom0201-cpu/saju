@@ -44,6 +44,7 @@ function calc(){
  drawCal();
  newYear();
  drawYong(C);
+ drawWhoBars(C);drawDdi();if($('mres').innerHTML)manseQuery();
  drawMT(C);
  lifeGraph(C);
  $('nsex').value=v.sex;

@@ -1,8 +1,11 @@
 /* main.js — 탭 전환과 시작 (맨 마지막에 불러와야 함) */
 /* ============ 12. 탭 전환과 시작 ============ */
 function route(){
- const t=['saju','match','name'].includes(location.hash.slice(1))?location.hash.slice(1):'saju';
- for(const k of ['saju','match','name'])$('v-'+k).hidden=k!==t;
+ const TABS=['saju','luck','match','name','taek','manse'],t=TABS.includes(location.hash.slice(1))?location.hash.slice(1):'saju';
+ for(const k of TABS)$('v-'+k).hidden=k!==t;
+ if(t==='manse')try{initManse()}catch(e){}
+ if(t==='luck')try{drawCal()}catch(e){}
+ const on=document.querySelector(`#tabs a[data-t="${t}"]`);if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});
  document.querySelectorAll('#tabs a').forEach(a=>a.classList.toggle('on',a.dataset.t===t));
  if(t==='match'&&!$('gres').innerHTML)try{gRun()}catch(e){}
  if(t==='name'&&!$('nres').innerHTML)try{nameRun()}catch(e){}
