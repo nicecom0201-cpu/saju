@@ -26,7 +26,7 @@ js/
   main.js         메뉴 전환과 시작
   dragon-holo.webp/png 상단 오른쪽 홀로그램 용머리 (떠오르기·스캔빛·깜빡임·여의주 빛)
   topbar.js       상단 날짜·시간·방문자 수·날씨 (Open-Meteo 날씨, GeoJS 지역 추정, CountAPI(mileshilliard) 방문자 카운터)
-  snap.js         결과를 사진(PNG)으로 저장 — 휴대폰은 공유창(사진 저장), PC는 내려받기
+  snap.js         9개 메뉴 결과를 사진(PNG)으로 저장 — 휴대폰은 공유창(사진 저장), PC는 내려받기
   html2canvas.min.js  화면→사진 변환 라이브러리 (MIT, LICENSE-html2canvas.txt)
   tests.js        자동 테스트
 ```
