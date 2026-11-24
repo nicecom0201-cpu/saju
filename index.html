@@ -188,9 +188,9 @@ button:hover{opacity:.9}
 body.admin .adm{background:var(--ink);color:var(--bg)}
 .topbar{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;font-size:14px;color:var(--sub);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .topbar b{font:700 15px "IBM Plex Sans KR",sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
-#tbwx{margin-left:auto}
+.wxw{margin-left:auto;display:flex;flex-wrap:wrap;gap:6px;align-items:center}.wxbtn{background:none;border:0;color:var(--sub);font:14px "IBM Plex Sans KR",sans-serif;min-height:32px;padding:0;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}.wxbtn:hover{color:var(--ink)}#wxsel{min-height:36px;font-size:14px}
 .maker{font-size:14px;letter-spacing:.02em}.maker b{font-weight:700;color:var(--ink)}
-@media(max-width:600px){#tbwx{margin-left:0;flex-basis:100%}}
+@media(max-width:600px){.wxw{margin-left:0;flex-basis:100%}}
 footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 @media(max-width:600px){.two{grid-template-columns:minmax(0,1fr)}.pil{padding:10px 4px 12px}.pil .hid{display:none}}
 @media(prefers-reduced-motion:reduce){.bar .f{transition:none}}
@@ -198,7 +198,7 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
 </head>
 <body>
 <header class="band"><div class="wrap">
- <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span id="tbwx">날씨 불러오는 중…</span></div>
+ <div class="topbar" aria-live="off"><span id="tbdate"></span><b id="tbtime"></b><span class="wxw"><button type="button" id="tbwx" class="wxbtn">날씨 불러오는 중…</button><select id="wxsel" hidden aria-label="날씨 지역 선택"></select></span></div>
  <h1>사주 만세력</h1>
  <p class="lede">절기 기준 만세력으로 사주, 평생운, 궁합, 이름짓기까지 한 번에 봅니다.</p>
  <nav class="tabs" id="tabs"><a href="#saju" data-t="saju">사주</a><a href="#match" data-t="match">궁합</a><a href="#name" data-t="name">이름짓기</a></nav>
@@ -386,19 +386,19 @@ footer{font-size:13px;color:var(--sub);border-top:1px solid var(--line)}
  <button type="button" class="ghost adm" id="adminbtn">관리자</button>
 </div></footer>
 
-<script src="lunar.js?v=202611242306"></script>
-<script src="js/core.js?v=202611242306"></script>
-<script src="js/hanja-db.js?v=202611242306"></script>
-<script src="js/reading.js?v=202611242306"></script>
-<script src="js/saju-view.js?v=202611242306"></script>
-<script src="js/match.js?v=202611242306"></script>
-<script src="js/naming.js?v=202611242306"></script>
-<script src="js/tools.js?v=202611242306"></script>
-<script src="js/analysis.js?v=202611242306"></script>
-<script src="js/detail.js?v=202611242306"></script>
-<script src="js/admin.js?v=202611242306"></script>
-<script src="js/main.js?v=202611242306"></script>
-<script src="js/topbar.js?v=202611242306"></script>
-<script src="js/tests.js?v=202611242306"></script>
+<script src="lunar.js?v=202611242312"></script>
+<script src="js/core.js?v=202611242312"></script>
+<script src="js/hanja-db.js?v=202611242312"></script>
+<script src="js/reading.js?v=202611242312"></script>
+<script src="js/saju-view.js?v=202611242312"></script>
+<script src="js/match.js?v=202611242312"></script>
+<script src="js/naming.js?v=202611242312"></script>
+<script src="js/tools.js?v=202611242312"></script>
+<script src="js/analysis.js?v=202611242312"></script>
+<script src="js/detail.js?v=202611242312"></script>
+<script src="js/admin.js?v=202611242312"></script>
+<script src="js/main.js?v=202611242312"></script>
+<script src="js/topbar.js?v=202611242312"></script>
+<script src="js/tests.js?v=202611242312"></script>
 </body>
 </html>
