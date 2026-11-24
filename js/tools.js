@@ -7,19 +7,21 @@ const SJ={申:'寅卯辰',子:'寅卯辰',辰:'寅卯辰',寅:'申酉戌',午:'�
 
 /* ============ 14. 내 이름 풀이 ============ */
 const SLOT={1:['a1','a1h'],2:['a2','a2h']};
-function hjOpts(k){const syl=$(SLOT[k][0]).value.trim(),sel=$(SLOT[k][1]);
+// 입력칸에서 첫 번째 완성된 한글 글자만 꺼냄 (조합 중인 자음·모음은 무시)
+function sylOf(k){const m=$(SLOT[k][0]).value.match(/[가-힣]/);return m?m[0]:''}
+function hjOpts(k){const syl=sylOf(k),sel=$(SLOT[k][1]);if(sel.dataset.syl===syl&&sel.options.length)return;sel.dataset.syl=syl;
  const list=syl?HJ.map((h,i)=>[h,i]).filter(([h])=>h[1]===syl||h[2]===syl):[];
- sel.innerHTML=list.map(([h,i])=>`<option value="${i}">${h[0]} · ${h[3]} ${h[1]}</option>`).join('')+'<option value="m">목록에 없음 · 직접 입력</option>';
+ sel.innerHTML=list.map(([h,i])=>`<option value="${i}">${h[0]} · ${h[3]} ${h[1]}</option>`).join('')+`<option value="m">${list.length?'목록에 없음 · 직접 입력':(syl?`'${syl}' 한자 없음 · 직접 입력`:'글자를 먼저 입력하세요')}</option>`;
  manualUI()}
-function manualUI(){const need=[1,2].filter(k=>$(SLOT[k][1]).value==='m'&&$(SLOT[k][0]).value.trim());
+function manualUI(){const need=[1,2].filter(k=>$(SLOT[k][1]).value==='m'&&sylOf(k));
  const keep={};need.forEach(k=>{['c','s','e'].forEach(f=>{const el=$('m'+k+f);if(el)keep['m'+k+f]=el.value})});
  $('amanual').hidden=!need.length;
- $('amanual').innerHTML=need.map(k=>`<label>${esc($(SLOT[k][0]).value)} 한자<input id="m${k}c" maxlength="1" placeholder="예: 俊"></label>
+ $('amanual').innerHTML=need.map(k=>`<label>${esc(sylOf(k))} 한자<input id="m${k}c" maxlength="1" placeholder="예: 俊"></label>
   <label>원획 수<input id="m${k}s" type="number" min="1" max="40" inputmode="numeric" placeholder="예: 9"></label>
   <label>자원오행<select id="m${k}e">${ORD.map(o=>`<option value="${o}">${ELN[o]}</option>`).join('')}</select></label>`).join('')
-  +(need.length?'<p class="note" style="grid-column:1/-1;margin:0">원획과 자원오행은 작명용 옥편이나 대법원 인명용 한자 검색에서 확인할 수 있어요.</p>':'');
+  +(need.length?'<p class="note" style="grid-column:1/-1;margin:0">목록에 없는 한자는 직접 입력할 수 있어요. 원획과 자원오행은 작명용 옥편이나 대법원 인명용 한자 검색에서 확인할 수 있어요.</p>':'');
  Object.entries(keep).forEach(([id,v])=>{if($(id))$(id).value=v})}
-function slotChar(k){const syl=$(SLOT[k][0]).value.trim(),v=$(SLOT[k][1]).value;
+function slotChar(k){const syl=sylOf(k),v=$(SLOT[k][1]).value;
  if(!syl)return null;
  if(v!=='m'&&v!==''){const h=HJ[+v];return {c:h[0],r:syl,s:h[4],e:h[5],m:h[3]}}
  const s=Number(($('m'+k+'s')||{}).value),c=(($('m'+k+'c')||{}).value||'').trim();
