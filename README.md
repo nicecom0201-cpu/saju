@@ -20,7 +20,7 @@ js/
   detail.js       상세 창(대운·세운·날짜), 이름 비교
   admin.js        관리자 모드 (PIN 잠금)
   main.js         탭 전환과 시작
-  topbar.js       상단 실시간 날짜·시간·요일·날씨 (Open-Meteo 무료 API)
+  topbar.js       상단 실시간 날짜·시간·요일·날씨 (Open-Meteo 날씨, GeoJS로 접속 지역 추정)
   tests.js        자동 테스트
 ```
 
